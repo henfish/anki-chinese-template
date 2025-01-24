@@ -1,0 +1,204 @@
+<div class=all>
+    <div class="flip-card" id=flip-card>
+        <div class=flip-card-inner>
+            <div class=flip-card-front>
+                <div class=reading>{{Pinyin}}</div>
+            </div>
+            <div class=flip-card-back>
+                <div class=reading>{{Pinyin}}</div>
+                <div class=chinese>{{Color}}</div>
+                <!--<div class=chinese>{{Color}}/{{Traditional}}</div>-->
+                <br>
+                <div class=english id=english>{{English}}</div>
+                <div class=mneumonic>{{Mneumonic}}</div>
+                <div class=mneumonic> {{PlecoSents}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class=table>
+    <tr>
+        <th class=tags>{{Deck}}</th>
+        <!--<th class=tags>{{Frequency}}</th>-->
+    </tr>
+</table>
+
+<script>
+    if ("{{text:PlecoSents}}" == "") {
+        document.getElementById("english").style.display = "";
+    }
+    else {
+        document.getElementById("english").style.display = "none";
+    }
+    setTimeout(function () { document.getElementById("flip-card").classList.add('flipped') }, 0);
+    setTimeout(function () { document.getElementById("flip-card").classList.add('overflow') }, 500);
+</script>
+
+<!--
+    (HIDDEN) WORD LOOKUP:
+    <div class=comment>  Word lookup
+    ,
+    <a href="http://zhidao.baidu.com/q?word={{text:Hanzi}}&ct=17&pn=0&tn=ikaslist&rn=10&lm=0&fr=search">百度</a>,
+    <a href="http://image.baidu.com/i?ie=utf-8&word={{text:Hanzi}}">Image</a>
+    http://www.mdbg.net/chindict/chindict.php?page=worddict&wdrst=0&wdqb=
+    https://www.yellowbridge.com/chinese/dictionary.php?word=
+    -->
+    <div class="dd">
+        <table class="table2" id="table2">
+            <tr>
+                <th class="tags2">
+                    <a href="https://hanzicraft.com/character/{{text:Hanzi}}">字典</a>
+                </th>
+                <th class="tags2" style="padding:0px 2px 0px 0px">
+                    <select id="select_animate" class="dropdown" onchange="Stroke()">
+                        <option value="Default">✕</option>
+                        <script>
+                            var str = "{{Hanzi}}";
+                            var list = str.split("");
+                            var d1 = document.getElementById('select_animate');
+                            for (var i = 0; i < list.length; i++) {
+                                d1.insertAdjacentHTML('beforeend', '<option value="' + list[i] + '">' + list[i] + '</option>');
+                            }
+                        </script>
+                    </select>
+                </th>
+            </tr>
+        </table>
+    </div>
+<div class="" id="target"></div>
+<script language="javascript">
+    function Stroke() {
+        document.getElementById("target").className = "bgimg"
+        var js = document.createElement("script");
+        js.type = "text/javascript";
+        js.src = "https://cdn.jsdelivr.net/npm/hanzi-writer@2.2/dist/hanzi-writer.min.js";
+        js.onload = function () {
+            var writer = HanziWriter.create('target', document.getElementById("select_animate").value, {
+                width: 200,
+                height: 200,
+                padding: 0,
+                showOutline: true,
+                strokeAnimationSpeed: 1,
+                delayBetweenStrokes: 150, // milliseconds
+                radicalColor: '#337ab7' // blue
+            });
+            writer.loopCharacterAnimation();
+            document.getElementById("select_animate").onchange = function () { newcharacter() };
+            function newcharacter() {
+                writer.setCharacter(document.getElementById("select_animate").value);
+                writer.loopCharacterAnimation();
+            }
+            func();
+            function func() {
+                if (document.getElementById("select_animate").value == "Default") {
+                    document.getElementById("target").style.display = "none";
+                }
+                else {
+                    document.getElementById("target").style.display = "";
+                }
+                setTimeout(func, 10);
+            }
+        };
+        document.body.appendChild(js);
+    }
+</script>
+<style>
+    .dd .dropdown {
+        font-weight: normal;
+        transition: 0.1s;
+        background-color: rgba(256, 256, 256, 0);
+        border: none;
+        font-size: 20px !important;
+        color: black;
+        width: 20px;
+        height: 10px;
+    }
+
+    .dd .dropdown:focus {
+        outline: none !important;
+    }
+
+    .all:hover {
+        cursor: default !important;
+    }
+
+    .bgimg {
+        /*box-shadow: 0px 0px 7px rgba(0,0,0,0.2);*/
+        border-radius: 5px;
+        position: fixed;
+        top: 26px;
+        right: 0px;
+        width: 100%;
+        margin: 0px;
+        width: 200px;
+        height: 200px;
+        background-color: lightgrey;
+        opacity: 1;
+        background-size: 200px 200px;
+    }
+
+    a {
+        transition: 0.1s;
+        text-decoration: none !important;
+    }
+
+    a:not(:hover) {
+        color: black !important;
+    }
+
+    a:hover {
+        cursor: default !important;
+        color: rgba(0, 0, 0, 0.5) !important;
+    }
+
+    a:focus {
+        outline: none !important;
+    }
+
+    .dropbtn {
+        background-color: rgba(0, 0, 0, 0);
+        border: none;
+    }
+
+    /* The container <div> - needed to position the dropdown content */
+    .dropdown1 {
+        position: relative;
+        display: inline-block;
+        transition: 0.1s;
+    }
+
+    /* Dropdown Content (Hidden by Default) */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #e1e1e1;
+        min-width: 40px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    /* Links inside the dropdown */
+    .dropdown-content a {
+        color: black;
+        padding: 15px 10px;
+        text-decoration: none;
+        display: block;
+    }
+
+    /* Change color of dropdown links on hover */
+    .dropdown-content a:hover {
+        background-color: #ddd;
+    }
+
+    /* Show the dropdown menu on hover */
+    .dropdown1:hover .dropdown-content {
+        display: block;
+    }
+
+    /* Change the background color of the dropdown button when the dropdown content is shown */
+    .dropdown1:hover .dropbtn {
+        color: rgba(0, 0, 0, 0.5);
+    }
+</style>

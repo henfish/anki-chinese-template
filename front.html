@@ -1,0 +1,33 @@
+<table class=table>
+    <tr>
+        <th class=tags>{{Deck}}</th>
+    </tr>
+</table>
+
+<div class="flip-card1 slid" id="flip-card1">
+    <div class=flip-card-inner1>
+        <div class=flip-card-front>
+        </div>
+    </div>
+</div>
+
+<div class="flip-card slidright" id="flip-card">
+    <div class=flip-card-inner>
+        <div class=flip-card-front>
+            <div class=reading>{{Pinyin}}</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    setTimeout(function () { document.getElementById("flip-card").classList.add('slid') }, 0);
+    setTimeout(function () { document.getElementById("flip-card1").classList.remove('slid') }, 0);
+    setTimeout(function () { document.getElementById("flip-card1").classList.add('slidleft') }, 0);
+</script>
+
+
+<style>
+    .all:hover {
+        cursor: default;
+    }
+</style>
